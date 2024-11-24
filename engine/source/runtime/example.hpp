@@ -1,9 +1,13 @@
 #pragma once
 #include "loader.hpp"
 #include "core/span.hpp"
+#include "rhi/vulkan_impl/vk_device.hpp"
+// #include <rhi/vulkan_impl/volk.h>
 
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include <GLFW/glfw3native.h>
 
 #include <iostream>
 #include <array>
@@ -63,7 +67,6 @@ struct Hello_Triangle_Application final
 
 private:
     GLFWwindow* window{};
-    VkSurfaceKHR surface{};
     VkSwapchainKHR swap_chain{};
     std::vector<VkImage> swap_chain_images{};
     std::vector<VkImageView> swap_chain_image_views{};
@@ -115,13 +118,8 @@ private:
     VkImageView texture_image_view{};
     VkSampler texture_sampler{};
 
-    VkInstance instance{};
-    VkPhysicalDevice physical_device{VK_NULL_HANDLE};
-    VkDevice logical_device{};
-    VkQueue graphics_queue{};
-    VkQueue compute_queue{};
-    VkQueue present_queue{};
-    VkDebugUtilsMessengerEXT debug_messenger{};
+    using VulkanDevice = cannele::rhi::VulkanDevice;
+    VulkanDevice* device{nullptr};
 
     std::vector<VkSemaphore> image_available_semaphores{};
     std::vector<VkSemaphore> render_finished_semaphores{};

@@ -67,4 +67,7 @@ namespace cannele::core
     {
         return !(a == b);
     }
+
+    template<typename T>
+    using CSpan = Span<std::add_const_t<T>>;
 }

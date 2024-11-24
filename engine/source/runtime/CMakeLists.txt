@@ -8,17 +8,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Note: globbing sources is considered bad practice as CMake's generators may not detect new files
 # automatically. Keep that in mind when changing files, or explicitly mention them here.
+# add_compile_definitions("VK_NO_PROTOTYPES")
+add_compile_definitions("VK_USE_PLATFORM_WIN32_KHR")
+
 file(GLOB HEADER_FILES
   "*.h"
   "core/*.hpp"
   "core/logging/*.hpp"
   "rhi/*.hpp"
+  "rhi/vulkan_impl/*.hpp"
+  # "rhi/vulkan_impl/volk.h"
 )
 file(GLOB SOURCE_FILES
   "*.cpp"
   "core/*.cpp"
   "core/logging/*.cpp"
   "rhi/*.cpp"
+  "rhi/vulkan_impl/*.cpp"
+  # "rhi/vulkan_impl/volk.c"
 )
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${HEADER_FILES} ${SOURCE_FILES})
@@ -28,7 +35,6 @@ add_executable(${TARGET_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 add_compile_definitions("PROJECT_ROOT_DIR=${BINARY_ROOT_DIR}")
 
 target_compile_options(${TARGET_NAME} PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/WX->")
-
 
 set(POST_BUILD_COMMANDS
   COMMAND ${CMAKE_COMMAND} -E make_directory "${BINARY_ROOT_DIR}"

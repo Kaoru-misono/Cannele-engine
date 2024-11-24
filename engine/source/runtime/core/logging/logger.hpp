@@ -2,49 +2,36 @@
 
 #include <spdlog/spdlog.h>
 
-namespace cannele
+namespace cannele::core::log
 {
     class Logger final
     {
     public:
         static auto instance() -> Logger&;
 
-        template <typename... Args>
-        auto debug(fmt::format_string<Args...> fmt, Args &&... args) -> void {
-            logger->debug(fmt, std::forward<Args>(args)...);
+    #define CN_LOG_METHORD(level) \
+        template <typename... Args> \
+        auto level(fmt::format_string<Args...> fmt, Args &&... args) -> void { \
+            logger->level(fmt, std::forward<Args>(args)...); \
         }
 
-        template <typename... Args>
-        auto info(fmt::format_string<Args...> fmt, Args &&... args) -> void {
-            logger->info(fmt, std::forward<Args>(args)...);
-        }
+        CN_LOG_METHORD(info)
+        CN_LOG_METHORD(debug)
+        CN_LOG_METHORD(warn)
+        CN_LOG_METHORD(error)
+        CN_LOG_METHORD(critical)
 
-        template <typename... Args>
-        auto warn(fmt::format_string<Args...> fmt, Args &&... args) -> void {
-            logger->warn(fmt, std::forward<Args>(args)...);
-        }
-
-        template <typename... Args>
-        auto error(fmt::format_string<Args...> fmt, Args &&... args) -> void {
-            logger->error(fmt, std::forward<Args>(args)...);
-        }
-
-        template <typename... Args>
-        auto critical(fmt::format_string<Args...> fmt, Args &&... args) -> void {
-            logger->critical(fmt, std::forward<Args>(args)...);
-            std::exit(-1);
-        }
     private:
         Logger();
 
         std::shared_ptr<spdlog::logger> logger;
     };
 
-#define CN_DEBUG(fmt, ...)   Logger::instance().debug(fmt, ##__VA_ARGS__)
-#define CN_INFO(fmt, ...)    Logger::instance().info(fmt, ##__VA_ARGS__)
-#define CN_WARN(fmt, ...)    Logger::instance().warn(fmt, ##__VA_ARGS__)
-#define CN_ERROR(fmt, ...)   Logger::instance().error(fmt, ##__VA_ARGS__)
-#define CN_CRTICAL(fmt, ...) Logger::instance().critical(fmt, ##__VA_ARGS__)
+#define CN_DEBUG(fmt, ...)   ::cannele::core::log::Logger::instance().debug(fmt, ##__VA_ARGS__)
+#define CN_INFO(fmt, ...)    ::cannele::core::log::Logger::instance().info(fmt, ##__VA_ARGS__)
+#define CN_WARN(fmt, ...)    ::cannele::core::log::Logger::instance().warn(fmt, ##__VA_ARGS__)
+#define CN_ERROR(fmt, ...)   ::cannele::core::log::Logger::instance().error(fmt, ##__VA_ARGS__)
+#define CN_CRTICAL(fmt, ...) ::cannele::core::log::Logger::instance().critical(fmt, ##__VA_ARGS__)
 
 #define CN_ASSERT(expr) do { \
     if (!(expr)) { \

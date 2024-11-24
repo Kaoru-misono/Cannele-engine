@@ -4,8 +4,8 @@
 
 namespace cannele::rhi
 {
-    class CommandEncoder
+    struct DescriptorPool
     {
-        CN_INTERFACE(CommandEncoder);
+        CN_INTERFACE(DescriptorPool);
     };
 }

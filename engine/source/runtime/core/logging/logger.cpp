@@ -3,7 +3,7 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/basic_file_sink.h>
 
-namespace cannele
+namespace cannele::core::log
 {
     auto Logger::instance() -> Logger&
     {
