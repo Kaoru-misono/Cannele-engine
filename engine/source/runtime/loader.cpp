@@ -1,4 +1,5 @@
 #include "loader.hpp"
+#include "core/logging/logger.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -57,13 +58,14 @@ inline namespace
     }
 
 }
+using namespace cannele;
 
 auto load_model(std::string path) -> Assimp_Model
 {
     using Array_Index = Assimp_Model::Array_Index;
     using Node_Address_To_Index = std::unordered_map<std::string, Array_Index>;
 
-    std::cout << "Loading model..." << std::endl;
+    CN_INFO("Loading model...");
 
     Assimp::Importer importer;
     //TODO: set postprocessing step
@@ -255,12 +257,12 @@ auto load_model(std::string path) -> Assimp_Model
 
     Assimp_Model result;
     {
-        std::cout << "Loading materials..." << std::endl;
+        CN_INFO("Loading mateirals...");
         load_materials(result);
-        std::cout << result.materials.size() << " materials have been loaded." << std::endl;
-        std::cout << "Loading meshes..." << std::endl;
+        CN_INFO("{0} materials have been loaded.", result.materials.size());
+        CN_INFO("Loading meshes...");
         load_meshes(result);
-        std::cout << result.meshes.size() << " meshes have been loaded." << std::endl;
+        CN_DEBUG("{0} meshes have been loaded.", result.meshes.size());
         //for bones and animation
         auto node_addr_to_idx = load_hierarchy(result);
     }

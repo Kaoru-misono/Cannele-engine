@@ -1,6 +1,6 @@
 #pragma once
 
-#include "container.hpp"
+#include <iterator>
 
 namespace cannele::core
 {
@@ -25,14 +25,10 @@ namespace cannele::core
             : first{&*first}, last{&*last}
         {}
 
-        Span(T const* data, size_t size) : first(data), last(data + size) {}
+        template <class Iter>
+        Span(Iter first, size_t size) : Span{first, first + size} {}
 
-        Span(Init_List<T> list) : Span{list.begin(), list.end()} {}
-
-        template <size_t N>
-        Span(Array<T, N> const& array) : Span{array.begin(), array.end()} {}
-
-        Span(Vector<T> const& vector) : Span{vector.begin(), vector.end()} {}
+        Span(std::initializer_list<T> list) : Span{list.begin(), list.end()} {}
 
         auto data() const -> const_pointer { return first; }
 

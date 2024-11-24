@@ -4,6 +4,7 @@
 #include "compute_comp.h"
 #include "compute_vert.h"
 #include "compute_frag.h"
+#include "core/logging/logger.hpp"
 
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
@@ -22,6 +23,7 @@
 
 inline namespace
 {
+    using namespace cannele;
 #ifdef NDEBUG
     const bool enable_validation_layers = false;
 #else
@@ -58,7 +60,7 @@ inline namespace
 
     auto get_source_dir = [](std::string const& bin_dir) -> std::string
     {
-        auto ps = bin_dir.rfind("Vulkan-Tutorial");
+        auto ps = bin_dir.rfind("Cannele-engine");
 
         auto source_path = bin_dir.substr(0, ps);
 
@@ -68,7 +70,7 @@ inline namespace
 
     auto source_dir = get_source_dir(bin_dir);
 
-    auto asset_dir = source_dir + "Vulkan-Tutorial/engine/asset/";
+    auto asset_dir = source_dir + "Cannele-engine/engine/asset/";
 
     struct Particle final
     {
@@ -110,6 +112,7 @@ inline namespace
 
 auto Hello_Triangle_Application::run() -> void
 {
+    CN_INFO("initializing window...");
     init_window();
 
     init_vulkan();

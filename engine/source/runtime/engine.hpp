@@ -1,5 +1,6 @@
 #pragma once
 #include "loader.hpp"
+#include "core/span.hpp"
 
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>

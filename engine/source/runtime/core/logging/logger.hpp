@@ -40,21 +40,21 @@ namespace cannele
         std::shared_ptr<spdlog::logger> logger;
     };
 
-#define CANNELE_DEBUG(fmt, ...)   Logger::instance().debug(fmt, ##__VA_ARGS__)
-#define CANNELE_INFO(fmt, ...)    Logger::instance().info(fmt, ##__VA_ARGS__)
-#define CANNELE_WARN(fmt, ...)    Logger::instance().warn(fmt, ##__VA_ARGS__)
-#define CANNELE_ERROR(fmt, ...)   Logger::instance().error(fmt, ##__VA_ARGS__)
-#define CANNELE_CRTICAL(fmt, ...) Logger::instance().critical(fmt, ##__VA_ARGS__)
+#define CN_DEBUG(fmt, ...)   Logger::instance().debug(fmt, ##__VA_ARGS__)
+#define CN_INFO(fmt, ...)    Logger::instance().info(fmt, ##__VA_ARGS__)
+#define CN_WARN(fmt, ...)    Logger::instance().warn(fmt, ##__VA_ARGS__)
+#define CN_ERROR(fmt, ...)   Logger::instance().error(fmt, ##__VA_ARGS__)
+#define CN_CRTICAL(fmt, ...) Logger::instance().critical(fmt, ##__VA_ARGS__)
 
-#define CANNELE_ASSERT(expr) do { \
+#define CN_ASSERT(expr) do { \
     if (!(expr)) { \
-        CANNELE_CRTICAL("assertion failed in file '{}' line {}, expression: '{}'", \
+        CN_CRTICAL("assertion failed in file '{}' line {}, expression: '{}'", \
             __FILE__, __LINE__, #expr); \
     } \
 } while (false)
 #define CANNELE_ASSERT_MSG(expr, msg) do { \
     if (!(expr)) { \
-        CANNELE_CRTICAL("{} (file '{}' line {})", msg, __FILE__, __LINE__); \
+        CN_CRTICAL("{} (file '{}' line {})", msg, __FILE__, __LINE__); \
     } \
 } while (false)
 }
